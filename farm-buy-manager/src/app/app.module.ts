@@ -9,6 +9,7 @@ import { getAnalytics } from "firebase/analytics";
 
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
 
 // Initialize Firebase
 const app = initializeApp(environment.firebaseConfig);
@@ -21,7 +22,8 @@ const analytics = getAnalytics(app);
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
