@@ -35,6 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 
 
@@ -74,6 +75,7 @@ const materialModules = [
   MatDialogModule,
   MatSliderModule,
   ClipboardModule,
+  DragDropModule,
 ];
 
 @NgModule({

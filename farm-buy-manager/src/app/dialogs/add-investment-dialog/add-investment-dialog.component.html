@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Investment hinzufügen</h2>
+<mat-dialog-content>
+    <form  [formGroup] = "form">
+        <div style = "display: flex; flex-direction: column;">
+            <mat-form-field appearance ="outline">
+                <input matInput placeholder="Item" type = "text" [formControl] = "item">
+            </mat-form-field>
+
+            <mat-form-field appearance ="outline">
+                <input matInput placeholder="Preis" type = "number" [formControl] = "price">
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-raised-button color = "accent" (click) = "add()">Speichern</button>
+    <button mat-button mat-raised-button color = "primary" (click) = "close()">Abbrechen</button>
+</mat-dialog-actions>

@@ -1,0 +1,23 @@
+<div class="main-wrapper" style = "display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h1>Farm Investment Management</h1>
+    <h3>by Hinti</h3>
+    <mat-card class="box">
+        <mat-card-header>
+            <mat-card-title>Anmelden</mat-card-title>
+        </mat-card-header>
+    
+        <form  [formGroup] = "form">
+            <mat-card-content>
+            <mat-form-field class="example-full-width" appearance ="outline">
+                <input matInput placeholder="Benutzername" type = "text" [formControl] = "username">
+            </mat-form-field>
+    
+            <mat-form-field class="example-full-width" appearance ="outline">
+                <input matInput placeholder="Passwort" type = "password" [formControl] = "password">
+            </mat-form-field>
+            </mat-card-content>
+            <button style="margin-top: 2%;" mat-stroked-button color=primary (click) = "login()" class="btn-block">Anmelden</button>
+        </form>
+    </mat-card>
+</div>
+

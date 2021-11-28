@@ -1,0 +1,102 @@
+<div class="main-wrapper">
+    <mat-tab-group style="height: 100%">
+        <mat-tab style="height: 100%" label="Überblick">
+            <div>
+                
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column;">
+                    <h2 style = "margin-top: 5%;">Geplante Investitionen</h2>
+                    <mat-spinner *ngIf="loading"></mat-spinner>
+                    <table *ngIf="!loading" style="width: 60%;" mat-table [dataSource]="openinvestments" class="mat-elevation-z8">
+                        <!-- Item Column -->
+                        <ng-container matColumnDef="item">
+                            <th mat-header-cell *matHeaderCellDef> Item </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.item}} </td>
+                        </ng-container>
+                        <!-- Preis Column -->
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef> Preis </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.price}} € </td>
+                        </ng-container>
+                        <!-- CreatedBy Column -->
+                        <ng-container matColumnDef="createdby">
+                            <th mat-header-cell *matHeaderCellDef> Erstellt von </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.createdBy | titlecase}} </td>
+                        </ng-container>
+                        <!-- CreatedAt Column -->
+                        <ng-container matColumnDef="createdat">
+                            <th mat-header-cell *matHeaderCellDef> Erstellt am </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.createdAt.toMillis() |
+                                date:'dd.MM.yyyy HH:mm'}} </td>
+                        </ng-container>
+                        <!-- CreatedAt Column -->
+                        <ng-container matColumnDef="points">
+                            <th mat-header-cell *matHeaderCellDef> Punkte </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.points}} </td>
+                        </ng-container>
+                        <!-- Action Bought -->
+                        <ng-container matColumnDef="action1">
+                            <th mat-header-cell *matHeaderCellDef> Gekauft </th>
+                            <td (click)= "buyInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>add_shopping_cart</mat-icon></td>
+                        </ng-container>
+                        <!-- Action Bought -->
+                        <ng-container matColumnDef="action2">
+                            <th mat-header-cell *matHeaderCellDef> Löschen </th>
+                            <td (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns:  displayedColumns;"></tr>
+                    </table>
+                    <button style="margin-top: 2%;" mat-button color="primary"
+                    (click)="openAddDialog()">Investment hinzufügen</button>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 10%; flex-direction: column;">
+                    <h2>Gemachte Investitionen</h2>
+                    <mat-spinner *ngIf="loading"></mat-spinner>
+                    <table *ngIf="!loading" style="width: 60%;" mat-table [dataSource]="boughtinvestments" class="mat-elevation-z8">
+                        <!-- Item Column -->
+                        <ng-container matColumnDef="item">
+                            <th mat-header-cell *matHeaderCellDef> Item </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.item}} </td>
+                        </ng-container>
+                        <!-- Preis Column -->
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef> Preis </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.price}} € </td>
+                        </ng-container>
+                        <!-- CreatedBy Column -->
+                        <ng-container matColumnDef="createdby">
+                            <th mat-header-cell *matHeaderCellDef> Erstellt von </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.createdBy | titlecase}} </td>
+                        </ng-container>
+                        <!-- CreatedAt Column -->
+                        <ng-container matColumnDef="createdat">
+                            <th mat-header-cell *matHeaderCellDef> Erstellt am </th>
+                            <td mat-cell *matCellDef="let investment"> {{investment.createdAt.toMillis() |
+                                date:'dd.MM.yyyy HH:mm'}} </td>
+                        </ng-container>
+                        <!-- Action Bought -->
+                        <ng-container matColumnDef="action2">
+                            <th mat-header-cell *matHeaderCellDef> Löschen </th>
+                            <td (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef=" displayedColumnsBought"></tr>
+                        <tr mat-row *matRowDef="let row; columns:  displayedColumnsBought;"></tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Mein Ranking" style="height: 100%">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column;">
+                <h2 style = "margin-top: 5%;">Ranking der Investitionen</h2>
+                    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let item of openinvestmentsArrayMoving " cdkDrag>{{item.item}} für {{item.price}} €</div>
+                    </div>
+                    <button style="margin-top: 2%;" mat-button color="primary"
+                    (click)="saveRanking()">Ranking Speichern</button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
