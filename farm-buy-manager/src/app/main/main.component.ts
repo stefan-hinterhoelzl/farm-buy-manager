@@ -16,8 +16,10 @@ export class MainComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private firestore: InvestmentsService, private snackbar: SnackbarComponent) { }
   loading: boolean = true;
+  newrankingloading: boolean = false;
   openinvestments: Investment[] = []
   openinvestmentsArrayMoving: Investment[] = []
+  rankings: Ranking[] = []
   boughtinvestments: Investment[] = []
   displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1', 'action2'];
   displayedColumnsBought: string[] = ['item', 'price', 'createdby', 'createdat', 'action2'];
@@ -28,6 +30,7 @@ export class MainComponent implements OnInit {
         this.openinvestmentsArrayMoving.length = 0;
         this.openinvestments = data.filter((value) => {return value.bought == false})
         this.openinvestments.forEach((value) => this.openinvestmentsArrayMoving.push(Object.assign({}, value)))
+        this.rankings = await this.firestore.getLastRankingPromise();
         this.boughtinvestments = data.filter((value) => {return value.bought == true})
         this.loading = false;
       }
@@ -64,10 +67,12 @@ export class MainComponent implements OnInit {
 
 
   saveRanking() {
+    this.newrankingloading = true;
     let passingarray:Investment[] = []
     this.openinvestmentsArrayMoving.forEach((value) => passingarray.push(Object.assign({}, value)));
     this.firestore.saveRanking(passingarray).then(async (data) => {
       this.snackbar.openSnackBar("Ranking gespeichert!", "green-snackbar")
+      this.newrankingloading = false;
     });
   }
 
