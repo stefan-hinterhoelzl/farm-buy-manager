@@ -36,12 +36,12 @@
                         <!-- Action Bought -->
                         <ng-container matColumnDef="action1">
                             <th mat-header-cell *matHeaderCellDef> Gekauft </th>
-                            <td (click)= "buyInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>add_shopping_cart</mat-icon></td>
+                            <td style="cursor: pointer;" (click)= "buyInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>add_shopping_cart</mat-icon></td>
                         </ng-container>
                         <!-- Action Bought -->
                         <ng-container matColumnDef="action2">
                             <th mat-header-cell *matHeaderCellDef> Löschen </th>
-                            <td (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
+                            <td style="cursor: pointer;" (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
@@ -78,7 +78,7 @@
                         <!-- Action Bought -->
                         <ng-container matColumnDef="action2">
                             <th mat-header-cell *matHeaderCellDef> Löschen </th>
-                            <td (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
+                            <td style="cursor: pointer;" (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef=" displayedColumnsBought"></tr>

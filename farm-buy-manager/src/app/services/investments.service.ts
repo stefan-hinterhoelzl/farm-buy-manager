@@ -106,19 +106,17 @@ export class InvestmentsService {
      const firestore = getFirestore();
 
      const docRef = doc(firestore, "investments/"+uid);
-     await updateDoc(docRef, {
+      return updateDoc(docRef, {
        points: 0,
        bought: true,
-     });
-
-     this.deleteRankings(uid);
+     }).then(() => {this.deleteRankings(uid)});
   }
 
   async delete(uid: string) {
     const firestore = getFirestore();
     const docRef = doc(firestore, "investments/"+uid);
-    await deleteDoc(docRef);
-    this.deleteRankings(uid);
+
+    return deleteDoc(docRef).then(() => {this.deleteRankings(uid);});
   }
 
 

@@ -48,11 +48,13 @@ export class MainComponent implements OnInit {
     const dialogRef = this.dialog.open(AddInvestmentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().pipe(take(1)).subscribe((data: Investment) => {
-      this.firestore.addInvestment(data).then((data) => {
-        this.snackbar.openSnackBar("Investment erfolreich hinzugefügt", "green-snackbar")
-      }).catch((error) => {
-        this.snackbar.openSnackBar("Fehler beim Hinzufügen des Investmens", "red-snackbar")
-      });
+      if (data != null) {
+        this.firestore.addInvestment(data).then((data) => {
+          this.snackbar.openSnackBar("Investition erfolreich hinzugefügt.", "green-snackbar")
+        }).catch((error) => {
+          this.snackbar.openSnackBar("Fehler beim Hinzufügen des Investition.", "red-snackbar")
+        });
+      }
     }); 
   }
 
@@ -70,11 +72,19 @@ export class MainComponent implements OnInit {
   }
 
   deleteInvestment(investment: Investment) {
-    this.firestore.delete(investment.uid);
+    this.firestore.delete(investment.uid).then(() => {
+      this.snackbar.openSnackBar("Investition gelöscht.", "green-snackbar");
+    }).catch((error) => {
+      this.snackbar.openSnackBar("Löschen der Investition fehlgeschlagen.", "red-snackbar");
+    })
   }
 
   buyInvestment(investment: Investment) {
-    this.firestore.setToBought(investment.uid);
+    this.firestore.setToBought(investment.uid).then(() => {
+      this.snackbar.openSnackBar("Investition wurde gekauft.", "green-snackbar");
+    }).catch((error) => {
+      this.snackbar.openSnackBar("Setzen der Investition auf 'Gekauft' fehlgeschlagen.", "red-snackbar");
+    })
   }
 
 }
