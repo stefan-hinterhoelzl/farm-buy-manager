@@ -28,6 +28,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.firestore.investmentStatus.subscribe(async (data) => {
       if (data != null) {
+        this.investionVolume = 0;
         this.openinvestmentsArrayMoving.length = 0;
         this.openinvestments = data.filter((value) => {return value.bought == false})
         this.openinvestments.forEach((value) => {
