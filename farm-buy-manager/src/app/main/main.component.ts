@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   newrankingloading: boolean = false;
   openinvestments: Investment[] = []
   openinvestmentsArrayMoving: Investment[] = []
+  investionVolume: number = 0
   rankings: Ranking[] = []
   boughtinvestments: Investment[] = []
   displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1', 'action2'];
@@ -29,7 +30,10 @@ export class MainComponent implements OnInit {
       if (data != null) {
         this.openinvestmentsArrayMoving.length = 0;
         this.openinvestments = data.filter((value) => {return value.bought == false})
-        this.openinvestments.forEach((value) => this.openinvestmentsArrayMoving.push(Object.assign({}, value)))
+        this.openinvestments.forEach((value) => {
+          this.openinvestmentsArrayMoving.push(Object.assign({}, value))
+          this.investionVolume = this.investionVolume+value.price;
+        });
         this.rankings = await this.firestore.getLastRankingPromise();
         this.boughtinvestments = data.filter((value) => {return value.bought == true})
         this.loading = false;

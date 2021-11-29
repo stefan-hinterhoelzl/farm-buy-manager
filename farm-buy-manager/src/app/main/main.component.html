@@ -4,7 +4,10 @@
             <div>
                 
                 <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column;">
-                    <h2 style = "margin-top: 5%;">Geplante Investitionen</h2>
+                    <div style ="width: 60%; display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+                        <h2>Geplante Investitionen</h2>
+                        <p>Aktuelles Investitionsvolumen: <b>{{investionVolume}} €</b></p>
+                    </div>  
                     <mat-spinner *ngIf="loading"></mat-spinner>
                     <table *ngIf="!loading" style="width: 60%;" mat-table [dataSource]="openinvestments" class="mat-elevation-z8">
                         <!-- Item Column -->
@@ -47,8 +50,8 @@
                         <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns:  displayedColumns;"></tr>
                     </table>
-                    <button style="margin-top: 2%;" mat-button color="primary"
-                    (click)="openAddDialog()">Investment hinzufügen</button>
+                        <button style="margin-top: 2%;" mat-button color="primary"
+                        (click)="openAddDialog()">Investment hinzufügen</button>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 10%; flex-direction: column;">
                     <h2>Gemachte Investitionen</h2>
