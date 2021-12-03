@@ -55,6 +55,14 @@ export class InvestmentsService {
     });
   }
 
+  async updateInvestment(investment: Investment) {
+    const firestore = getFirestore();
+
+    const docRef = doc(firestore, "investments/"+investment.uid);
+
+    return updateDoc(docRef, {...investment});
+  }
+
   async saveRanking(arr: Investment[]) {
     const auth = getAuth();
     const firestore = getFirestore()

@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>Investment hinzufügen</h2>
+<h2 *ngIf = "data == null" mat-dialog-title>Investment hinzufügen</h2>
+<h2 *ngIf = "data != null" mat-dialog-title>Investment bearbeiten</h2>
 <mat-dialog-content>
     <form  [formGroup] = "form">
         <div style = "display: flex; flex-direction: column;">

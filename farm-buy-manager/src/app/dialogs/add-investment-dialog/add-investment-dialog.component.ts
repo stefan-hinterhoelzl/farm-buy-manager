@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { getAuth } from '@firebase/auth';
 import { serverTimestamp } from '@firebase/firestore';
 import { Investment, Ranking } from 'src/app/models/investment.model';
@@ -13,11 +13,13 @@ import { SnackbarComponent } from 'src/app/snackbar/snackbar.component';
 })
 export class AddInvestmentDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<AddInvestmentDialogComponent>, private fb: FormBuilder, private snackbar: SnackbarComponent) {
+
+  constructor(private dialogRef: MatDialogRef<AddInvestmentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private snackbar: SnackbarComponent) {
     this.form = this.fb.group({
       item: this.item,
       price: this.price
-    })
+    });
+    
    }
 
   item = new FormControl('', [Validators.required]);
@@ -25,6 +27,10 @@ export class AddInvestmentDialogComponent implements OnInit {
   form: FormGroup
 
   ngOnInit(): void {
+    if (this.data != null) {
+      this.item.setValue(this.data.investment.item);
+      this.price.setValue(this.data.investment.price);
+    }
   }
 
   close() {
@@ -33,17 +39,10 @@ export class AddInvestmentDialogComponent implements OnInit {
 
   add() {
     if (this.item.value != "" && this.price.value != "") {
-      const auth = getAuth()
+      this.data.investment.price = this.price.value;
+      this.data.investment.item = this.item.value;
 
-      const investment = <Investment> {
-        item: this.item.value,
-        price: this.price.value,
-        createdBy: auth.currentUser?.email?.substring(0, auth.currentUser.email.indexOf('@')),
-        createdAt: serverTimestamp(),
-        points: 0,
-        bought: false,
-      }
-      this.dialogRef.close(investment);
+      this.dialogRef.close(this.data.investment);
     } else {
       this.snackbar.openSnackBar("Nicht alle Felder wurden ausgefüllt.", "red-snackbar");
     }

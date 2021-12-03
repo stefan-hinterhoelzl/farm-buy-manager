@@ -6,7 +6,7 @@
                 <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column;">
                     <div style ="width: 60%; display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
                         <h2>Geplante Investitionen</h2>
-                        <p>Aktuelles Investitionsvolumen: <b>{{investionVolume}} €</b></p>
+                        <p>Aktuelles Investitionsvolumen: <b>{{investionVolume.toLocaleString('de-DE')}} €</b></p>
                     </div>  
                     <mat-spinner *ngIf="loading"></mat-spinner>
                     <table *ngIf="!loading" style="width: 60%;" mat-table [dataSource]="openinvestments" class="mat-elevation-z8">
@@ -18,7 +18,7 @@
                         <!-- Preis Column -->
                         <ng-container matColumnDef="price">
                             <th mat-header-cell *matHeaderCellDef> Preis </th>
-                            <td mat-cell *matCellDef="let investment"> {{investment.price}} € </td>
+                            <td mat-cell *matCellDef="let investment"> {{investment.price.toLocaleString('de-DE')}} € </td>
                         </ng-container>
                         <!-- CreatedBy Column -->
                         <ng-container matColumnDef="createdby">
@@ -47,6 +47,12 @@
                             <td style="cursor: pointer;" (click)= "deleteInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>delete</mat-icon></td>
                         </ng-container>
 
+                        <!-- Action Bought -->
+                        <ng-container matColumnDef="action3">
+                            <th mat-header-cell *matHeaderCellDef> Bearbeiten </th>
+                            <td style="cursor: pointer;" (click)= "editInvestment(investment)" mat-cell *matCellDef="let investment"><mat-icon>edit</mat-icon></td>
+                        </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef=" displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns:  displayedColumns;"></tr>
                     </table>
@@ -65,7 +71,7 @@
                         <!-- Preis Column -->
                         <ng-container matColumnDef="price">
                             <th mat-header-cell *matHeaderCellDef> Preis </th>
-                            <td mat-cell *matCellDef="let investment"> {{investment.price}} € </td>
+                            <td mat-cell *matCellDef="let investment"> {{investment.price.toLocaleString('de-DE')}} € </td>
                         </ng-container>
                         <!-- CreatedBy Column -->
                         <ng-container matColumnDef="createdby">
@@ -92,7 +98,7 @@
             </div>
         </mat-tab>
         <mat-tab label="Ranking" style="height: 100%">
-            <div style="display: flex; justify-content: space-around; align-items: center; height: 100%; flex-direction: row;">
+            <div class = "drag-and-drops">
                     <div style="display: flex; flex-direction: column;">
                             <h2 style = "margin-top: 2%;">Dein aktuelles Ranking der Investitionen</h2>
                             <div *ngIf = "!newrankingloading" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
@@ -101,7 +107,6 @@
                         <mat-spinner *ngIf="newrankingloading"></mat-spinner>
                     </div>
                    
-
                     <div style="display: flex; flex-direction: column; justify-content: center;">
                         <div style ="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
                             <h2 style = "margin-top: 2%;">Neues Ranking aus aktuellen Investitionen erstellen</h2>

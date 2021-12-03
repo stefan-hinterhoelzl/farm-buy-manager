@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
   investionVolume: number = 0
   rankings: Ranking[] = []
   boughtinvestments: Investment[] = []
-  displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1', 'action2'];
+  displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1','action2', 'action3'];
   displayedColumnsBought: string[] = ['item', 'price', 'createdby', 'createdat', 'action2'];
 
   ngOnInit(): void {
@@ -61,6 +61,34 @@ export class MainComponent implements OnInit {
           this.snackbar.openSnackBar("Investition erfolreich hinzugefügt.", "green-snackbar")
         }).catch((error) => {
           this.snackbar.openSnackBar("Fehler beim Hinzufügen des Investition.", "red-snackbar")
+        });
+      }
+    }); 
+  }
+
+  editInvestment(investment: Investment) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height = "300px"
+    dialogConfig.width = "700px"
+    dialogConfig.minWidth = "500px"
+    dialogConfig.minHeight = "300px"
+
+    dialogConfig.data = {
+      investment: investment,
+    }
+
+    const dialogRef = this.dialog.open(AddInvestmentDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((data: Investment) => {
+      if (data != null) {
+        this.firestore.updateInvestment(data).then((data) => {
+          this.snackbar.openSnackBar("Investition erfolgreich geändert.", "green-snackbar")
+        }).catch((error) => {
+          this.snackbar.openSnackBar("Fehler beim Ändern der Investition.", "red-snackbar")
+          console.log(error);
         });
       }
     }); 
