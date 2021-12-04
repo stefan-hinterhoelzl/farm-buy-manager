@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { getAuth } from '@firebase/auth';
 import { take } from 'rxjs';
 import { AddInvestmentDialogComponent } from '../dialogs/add-investment-dialog/add-investment-dialog.component';
 import { AreYouSureDialogComponent } from '../dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
@@ -24,23 +26,48 @@ export class MainComponent implements OnInit {
   rankings: Ranking[] = []
   boughtinvestments: Investment[] = []
   displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1', 'action2', 'action3'];
-  mobileColumns: string[] = ['item', 'price', 'action1', 'action2', 'action3'];
+  mobileColumns: string[] = ['item', 'price', 'points', 'action1', 'action2', 'action3'];
   displayedColumnsBought: string[] = ['item', 'price', 'createdby', 'createdat', 'action2'];
   mobileColumnsBought: string[] = ['item', 'price', 'action2'];
   isMobileLayout: boolean = false;
 
   ngOnInit(): void {
+
+    const auth = getAuth();
+
     this.firestore.investmentStatus.subscribe(async (data) => {
       if (data != null) {
         this.investionVolume = 0;
-        this.openinvestmentsArrayMoving.length = 0;
         this.openinvestments = data.filter((value) => { return value.bought == false })
         this.openinvestments.forEach((value) => {
-          this.openinvestmentsArrayMoving.push(Object.assign({}, value))
           this.investionVolume = this.investionVolume + value.price;
         });
         this.rankings = await this.firestore.getLastRankingPromise();
         this.boughtinvestments = data.filter((value) => { return value.bought == true })
+
+        //Match existing Ranking with new data
+        for (let i = 0; i < this.rankings.length; i++) {
+          let item = this.openinvestments.find((value) => {return value.uid == this.rankings[i].item})
+          //remove the element
+          if (item == undefined) this.rankings.splice(i, 1);
+        }
+
+        if (this.rankings.length < this.openinvestments.length) {
+          for (let i = 0; i < this.openinvestments.length; i++) {
+            let item = this.rankings.find((value) => {return value.item == this.openinvestments[i].uid})
+            
+            if (item == undefined) {
+              const ranking = <Ranking> {
+                itemname: this.openinvestments[i].item,
+                item: this.openinvestments[i].uid,
+                points: 0,
+                user: auth.currentUser != null?auth.currentUser.uid:" "
+              }
+
+              this.rankings.push(ranking);
+            }
+          }
+        }
         this.loading = false;
       }
     });
@@ -123,16 +150,15 @@ export class MainComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.openinvestmentsArrayMoving, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.rankings, event.previousIndex, event.currentIndex);
   }
 
 
   saveRanking() {
     this.newrankingloading = true;
-    let passingarray: Investment[] = []
-    this.openinvestmentsArrayMoving.forEach((value) => passingarray.push(Object.assign({}, value)));
-    this.firestore.saveRanking(passingarray).then(async (data) => {
+    this.firestore.saveRanking(this.rankings).then(async (data) => {
       this.snackbar.openSnackBar("Ranking gespeichert!", "green-snackbar")
+      
       this.newrankingloading = false;
     });
   }

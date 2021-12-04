@@ -13,18 +13,7 @@
   .example-list {
     width: 95%;
   }
-
-  .list-header{
-    width: 95%;
-  }
 }
-
-.list-header {
-  margin-top: 2%
-
-
-}
-
 
 
 .example-box {
@@ -67,27 +56,35 @@ transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 
 
 .mat-column-item{
-  width: 35% !important;
+  width: 30% !important;
+  padding-right: 3%;
 }
 
 .mat-column-price{
-  width: 10% !important;
+  width: 12% !important;
+  text-align: center;
+}
+
+.mat-column-points{
+  width: 12% !important;
+  text-align: center;
 }
 
 
 .mat-column-action1{
-  width: 5% !important;
+  width: 2% !important;
+  text-align: center;
 }
 .mat-column-action2{
-  width: 5% !important;
+  width: 2% !important;
+  text-align: center;
 }
 .mat-column-action3{
-  width: 5% !important;
+  width: 2% !important;
+  text-align: center;
 }
 
-.mat-cell {
-  padding: 5%, 5%, 5%, 5%;
-}
+
 
 .drag-and-drop{
   display: flex;
@@ -101,8 +98,8 @@ transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   display: flex;
   flex-direction: column; 
   align-items: center;
+  justify-content: center;
   width: 100%;
-  flex-basis: 1;
 }
 
 .current-ranking {

@@ -63,11 +63,11 @@ export class InvestmentsService {
     return updateDoc(docRef, {...investment});
   }
 
-  async saveRanking(arr: Investment[]) {
+  async saveRanking(arr: Ranking[]) {
     const auth = getAuth();
     const firestore = getFirestore()
     for (let i = 0; i<arr.length; i++) {
-      const q = query(collection(firestore, "rankings"), where("item", "==", arr[i].uid), where("user", "==", auth.currentUser?.uid))
+      const q = query(collection(firestore, "rankings"), where("item", "==", arr[i].item), where("user", "==", auth.currentUser?.uid))
       const querySnapshot = await getDocs(q)
       let incrementvalue = 0;
       let ranking;
@@ -84,13 +84,13 @@ export class InvestmentsService {
         if (incrementvalue < 0 ) incrementvalue = 0;
         ranking = <Ranking> {
           points: incrementvalue,
-          item: arr[i].uid,
-          itemname: arr[i].item,
+          item: arr[i].item,
+          itemname: arr[i].itemname,
           user: auth.currentUser?.uid,
         }
         addDoc(collection(firestore, "rankings"), {...ranking})
       }
-      await updateDoc(doc(firestore, "investments/"+arr[i].uid), {
+      await updateDoc(doc(firestore, "investments/"+arr[i].item), {
         points: increment(incrementvalue)
       });
     }

@@ -39,10 +39,23 @@ export class AddInvestmentDialogComponent implements OnInit {
 
   add() {
     if (this.item.value != "" && this.price.value != "") {
+      if (this.data != null) {
       this.data.investment.price = this.price.value;
       this.data.investment.item = this.item.value;
-
       this.dialogRef.close(this.data.investment);
+      }else {
+        const auth = getAuth()
+
+        const investment = <Investment> {
+          item: this.item.value,
+          price: this.price.value,
+          createdBy: auth.currentUser?.email?.substring(0, auth.currentUser.email.indexOf('@')),
+          createdAt: serverTimestamp(),
+          points: 0,
+          bought: false,
+        }
+        this.dialogRef.close(investment)
+      }
     } else {
       this.snackbar.openSnackBar("Nicht alle Felder wurden ausgefüllt.", "red-snackbar");
     }
