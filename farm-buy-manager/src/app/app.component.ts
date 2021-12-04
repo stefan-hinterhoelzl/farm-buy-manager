@@ -51,12 +51,21 @@ export class AppComponent implements OnInit {
   openChangePasswordDialog() {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.height = "300px"
-    dialogConfig.width = "500px"
-    dialogConfig.minWidth = "500px"
-    dialogConfig.minHeight = "300px"
+    if (!this.isMobileLayout) {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "33%"
+      dialogConfig.width = "60%"
+      dialogConfig.minWidth = "60%"
+      dialogConfig.minHeight = "33%"
+    } else {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "45%"
+      dialogConfig.width = "95%"
+      dialogConfig.minWidth = "95%"
+      dialogConfig.minHeight = "45%"
+    }
 
     const dialogRef = this.dialog.open(ChangePasswordDialogComponent, dialogConfig);
 
