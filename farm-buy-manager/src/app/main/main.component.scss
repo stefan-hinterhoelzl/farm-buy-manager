@@ -54,36 +54,36 @@ border: none;
 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+@media(max-width: 1300px) {
+  .mat-column-item{
+    width: 30% !important;
+    padding-right: 3%;
+  }
 
-.mat-column-item{
-  width: 30% !important;
-  padding-right: 3%;
-}
+  .mat-column-price{
+    width: 12% !important;
+    text-align: center;
+  }
 
-.mat-column-price{
-  width: 12% !important;
-  text-align: center;
-}
-
-.mat-column-points{
-  width: 12% !important;
-  text-align: center;
-}
+  .mat-column-points{
+    width: 12% !important;
+    text-align: center;
+  }
 
 
-.mat-column-action1{
-  width: 2% !important;
-  text-align: center;
+  .mat-column-action1{
+    width: 2% !important;
+    text-align: center;
+  }
+  .mat-column-action2{
+    width: 2% !important;
+    text-align: center;
+  }
+  .mat-column-action3{
+    width: 2% !important;
+    text-align: center;
+  }
 }
-.mat-column-action2{
-  width: 2% !important;
-  text-align: center;
-}
-.mat-column-action3{
-  width: 2% !important;
-  text-align: center;
-}
-
 
 
 .drag-and-drop{
