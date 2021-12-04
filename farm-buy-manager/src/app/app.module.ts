@@ -16,6 +16,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MainComponent } from './main/main.component';
 import { AddInvestmentDialogComponent } from './dialogs/add-investment-dialog/add-investment-dialog.component';
 import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
+import { AreYouSureDialogComponent } from './dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 
 // Initialize Firebase
 const app = initializeApp(environment.firebaseConfig);
@@ -29,6 +30,7 @@ const analytics = getAnalytics(app);
     MainComponent,
     AddInvestmentDialogComponent,
     ChangePasswordDialogComponent,
+    AreYouSureDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 .example-list {
-    width: 700px;
+    width: 50%;
     max-width: 100%;
     border: solid 1px #ccc;
     min-height: 60px;
@@ -8,6 +8,14 @@
     border-radius: 4px;
     overflow: hidden;
   }
+
+@media(max-width: 950px) {
+  .example-list {
+    width: 95%;
+  }
+}
+
+
 
 .example-box {
 padding: 20px 10px;
@@ -45,4 +53,50 @@ border: none;
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+.mat-column-item{
+  width: 35% !important;
+}
+
+.mat-column-price{
+  width: 10% !important;
+}
+
+
+.mat-column-action1{
+  width: 5% !important;
+}
+.mat-column-action2{
+  width: 5% !important;
+}
+.mat-column-action3{
+  width: 5% !important;
+}
+
+.mat-cell {
+  padding: 5%, 5%, 5%, 5%;
+}
+
+.drag-and-drop{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.ranking-column {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  width: 100%;
+}
+
+.current-ranking {
+  display: flex; 
+  flex-direction: column; 
+  width: 100%;
+  align-items: center;
 }

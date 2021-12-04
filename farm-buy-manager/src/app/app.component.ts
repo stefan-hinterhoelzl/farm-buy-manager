@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, User } from '@firebase/auth';
@@ -11,15 +11,28 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'farm-buy-manager';
 
   isloggedIn: boolean = false;
+  isMobileLayout: boolean = false;
 
   constructor(private auth: AuthService, private router: Router, private dialog: MatDialog) {
     this.authStautsListener()
 
   }
+  ngOnInit(): void {
+    
+    if(window.screen.width <=1300) this.isMobileLayout = true;
+
+    //Check for screen size
+    window.onresize = () => {
+      console.log("Hello")
+      this.isMobileLayout = window.innerWidth <= 1300;
+  }
+}
+
+
   authStautsListener() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {

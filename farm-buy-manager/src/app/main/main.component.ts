@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { AddInvestmentDialogComponent } from '../dialogs/add-investment-dialog/add-investment-dialog.component';
+import { AreYouSureDialogComponent } from '../dialogs/are-you-sure-dialog/are-you-sure-dialog.component';
 import { Investment, Ranking } from '../models/investment.model';
 import { InvestmentsService } from '../services/investments.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
@@ -22,36 +23,54 @@ export class MainComponent implements OnInit {
   investionVolume: number = 0
   rankings: Ranking[] = []
   boughtinvestments: Investment[] = []
-  displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1','action2', 'action3'];
+  displayedColumns: string[] = ['item', 'price', 'createdby', 'createdat', 'points', 'action1', 'action2', 'action3'];
+  mobileColumns: string[] = ['item', 'price', 'action1', 'action2', 'action3'];
   displayedColumnsBought: string[] = ['item', 'price', 'createdby', 'createdat', 'action2'];
+  mobileColumnsBought: string[] = ['item', 'price', 'action2'];
+  isMobileLayout: boolean = false;
 
   ngOnInit(): void {
     this.firestore.investmentStatus.subscribe(async (data) => {
       if (data != null) {
         this.investionVolume = 0;
         this.openinvestmentsArrayMoving.length = 0;
-        this.openinvestments = data.filter((value) => {return value.bought == false})
+        this.openinvestments = data.filter((value) => { return value.bought == false })
         this.openinvestments.forEach((value) => {
           this.openinvestmentsArrayMoving.push(Object.assign({}, value))
-          this.investionVolume = this.investionVolume+value.price;
+          this.investionVolume = this.investionVolume + value.price;
         });
         this.rankings = await this.firestore.getLastRankingPromise();
-        this.boughtinvestments = data.filter((value) => {return value.bought == true})
+        this.boughtinvestments = data.filter((value) => { return value.bought == true })
         this.loading = false;
       }
-    })
+    });
+
+    if (window.screen.width <= 1300) this.isMobileLayout = true;
+
+    //Check for screen size
+    window.onresize = () => this.isMobileLayout = window.innerWidth <= 1300;
   }
 
 
   openAddDialog() {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.height = "300px"
-    dialogConfig.width = "700px"
-    dialogConfig.minWidth = "500px"
-    dialogConfig.minHeight = "300px"
+    if (!this.isMobileLayout) {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "33%"
+      dialogConfig.width = "60%"
+      dialogConfig.minWidth = "60%"
+      dialogConfig.minHeight = "33%"
+    } else {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "45%"
+      dialogConfig.width = "95%"
+      dialogConfig.minWidth = "95%"
+      dialogConfig.minHeight = "45%"
+    }
+
 
     const dialogRef = this.dialog.open(AddInvestmentDialogComponent, dialogConfig);
 
@@ -63,18 +82,27 @@ export class MainComponent implements OnInit {
           this.snackbar.openSnackBar("Fehler beim Hinzufügen des Investition.", "red-snackbar")
         });
       }
-    }); 
+    });
   }
 
   editInvestment(investment: Investment) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.height = "300px"
-    dialogConfig.width = "700px"
-    dialogConfig.minWidth = "500px"
-    dialogConfig.minHeight = "300px"
+    if (!this.isMobileLayout) {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "33%"
+      dialogConfig.width = "60%"
+      dialogConfig.minWidth = "60%"
+      dialogConfig.minHeight = "33%"
+    } else {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "45%"
+      dialogConfig.width = "95%"
+      dialogConfig.minWidth = "95%"
+      dialogConfig.minHeight = "45%"
+    }
 
     dialogConfig.data = {
       investment: investment,
@@ -91,7 +119,7 @@ export class MainComponent implements OnInit {
           console.log(error);
         });
       }
-    }); 
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -101,7 +129,7 @@ export class MainComponent implements OnInit {
 
   saveRanking() {
     this.newrankingloading = true;
-    let passingarray:Investment[] = []
+    let passingarray: Investment[] = []
     this.openinvestmentsArrayMoving.forEach((value) => passingarray.push(Object.assign({}, value)));
     this.firestore.saveRanking(passingarray).then(async (data) => {
       this.snackbar.openSnackBar("Ranking gespeichert!", "green-snackbar")
@@ -110,19 +138,77 @@ export class MainComponent implements OnInit {
   }
 
   deleteInvestment(investment: Investment) {
-    this.firestore.delete(investment.uid).then(() => {
-      this.snackbar.openSnackBar("Investition gelöscht.", "green-snackbar");
-    }).catch((error) => {
-      this.snackbar.openSnackBar("Löschen der Investition fehlgeschlagen.", "red-snackbar");
-    })
+    const dialogConfig = new MatDialogConfig();
+
+    if (!this.isMobileLayout) {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "20%"
+      dialogConfig.width = "30%"
+      dialogConfig.minWidth = "30%"
+      dialogConfig.minHeight = "20%"
+    } else {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "30%"
+      dialogConfig.width = "95%"
+      dialogConfig.minWidth = "95%"
+      dialogConfig.minHeight = "30%"
+    }
+
+    dialogConfig.data = {
+      title: "Sind Sie sicher, dass Sie diese Investment löschen wollen?",
+      content: investment.item
+    }
+
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((data: Investment) => {
+      if (data) {
+        this.firestore.delete(investment.uid).then(() => {
+          this.snackbar.openSnackBar("Investition gelöscht.", "green-snackbar");
+        }).catch((error) => {
+          this.snackbar.openSnackBar("Löschen der Investition fehlgeschlagen.", "red-snackbar");
+        })
+      }
+    });
   }
 
   buyInvestment(investment: Investment) {
-    this.firestore.setToBought(investment.uid).then(() => {
-      this.snackbar.openSnackBar("Investition wurde gekauft.", "green-snackbar");
-    }).catch((error) => {
-      this.snackbar.openSnackBar("Setzen der Investition auf 'Gekauft' fehlgeschlagen.", "red-snackbar");
-    })
+    const dialogConfig = new MatDialogConfig();
+
+    if (!this.isMobileLayout) {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "20%"
+      dialogConfig.width = "30%"
+      dialogConfig.minWidth = "30%"
+      dialogConfig.minHeight = "20%"
+    } else {
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.height = "30%"
+      dialogConfig.width = "95%"
+      dialogConfig.minWidth = "95%"
+      dialogConfig.minHeight = "30%"
+    }
+
+    dialogConfig.data = {
+      title: "Sind Sie sicher, dass Sie diese Investment auf 'gekauft' setzen wollen?",
+      content: investment.item
+    }
+
+    const dialogRef = this.dialog.open(AreYouSureDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((data: Investment) => {
+      if (data) {
+        this.firestore.setToBought(investment.uid).then(() => {
+          this.snackbar.openSnackBar("Investition wurde gekauft.", "green-snackbar");
+        }).catch((error) => {
+          this.snackbar.openSnackBar("Setzen der Investition auf 'Gekauft' fehlgeschlagen.", "red-snackbar");
+        })
+      }
+    });
   }
 
 }
