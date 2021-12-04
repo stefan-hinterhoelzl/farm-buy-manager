@@ -117,7 +117,7 @@
                         <tr mat-header-row *matHeaderRowDef=" mobileColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns:  mobileColumns;"></tr>
                     </table>
-                    <button style="margin-top: 2%;" mat-button color="primary" (click)="openAddDialog()">Investment
+                    <button style="margin-top: 2%;" mat-button color="primary" (click)="openAddDialog()">Investition
                         hinzufügen</button>
                 </div>
                 <div
@@ -191,26 +191,31 @@
         </mat-tab>
         <mat-tab label="Ranking" style="height: 100%">
             <div class = "drag-and-drop">
-                <div class = "ranking-column">
-                    <h2 style="margin-top: 2%; width: 95%;">Neues Ranking aus aktuellen Investitionen erstellen</h2>
+                <div *ngIf="!newrankingloading" class = "ranking-column">
+                    <div style = "display: flex; justify-content: center; ">
+                        <h2 class = "list-header">Neues Ranking aus aktuellen Investitionen erstellen</h2>
+                    </div>
                     <div *ngIf="!newrankingloading" cdkDropList class="example-list"
                         (cdkDropListDropped)="drop($event)">
                         <div class="example-box" *ngFor="let item of openinvestmentsArrayMoving " cdkDrag>{{item.item}}
-                            für {{item.price}} € <b>{{item.points}} Punkte</b></div>
+                            für {{item.price}} € <b>{{item.points}} Punkte</b>
+                        </div>
                     </div>
-                    <button style="margin-top: 2%;" mat-button color="primary" (click)="saveRanking()">Ranking
+                    <button *ngIf="!newrankingloading" style="margin-top: 2%;" mat-button color="primary" (click)="saveRanking()">Ranking
                         Speichern</button>
-                    <mat-spinner *ngIf="newrankingloading"></mat-spinner>
                 </div>
-                <div class = "current-ranking">
-                    <h2 style="margin-top: 2%; width: 95%;">Dein aktuelles Ranking der Investitionen</h2>
+                <div *ngIf="!newrankingloading" class = "ranking-column">
+                    <div style = "display:flex; justify-content: center;">
+                        <h2 class = "list-header">Dein aktuelles Ranking der Investitionen</h2>
+                    </div>
                     <div *ngIf="!newrankingloading" cdkDropList class="example-list"
                         (cdkDropListDropped)="drop($event)">
                         <div style="cursor: default;" class="example-box" *ngFor="let ranking of rankings " cdkDrag
-                            [cdkDragDisabled]="true">{{ranking.itemname}}<b>{{ranking.points}} Punkte</b></div>
+                            [cdkDragDisabled]="true">{{ranking.itemname}}<b>{{ranking.points}} Punkte</b>
+                        </div>
                     </div>
-                    <mat-spinner *ngIf="newrankingloading"></mat-spinner>
                 </div>
+                <mat-spinner style="margin-top: 15%;" *ngIf="newrankingloading"></mat-spinner>
             </div>
         </mat-tab>
     </mat-tab-group>

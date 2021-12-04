@@ -157,7 +157,7 @@ export class MainComponent implements OnInit {
     }
 
     dialogConfig.data = {
-      title: "Sind Sie sicher, dass Sie diese Investment löschen wollen?",
+      title: "Sind Sie sicher, dass Sie diese Investition löschen wollen?",
       content: investment.item
     }
 
@@ -194,7 +194,7 @@ export class MainComponent implements OnInit {
     }
 
     dialogConfig.data = {
-      title: "Sind Sie sicher, dass Sie diese Investment auf 'gekauft' setzen wollen?",
+      title: "Sind Sie sicher, dass Sie diese Investition auf 'gekauft' setzen wollen?",
       content: investment.item
     }
 
