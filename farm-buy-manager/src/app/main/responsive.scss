@@ -1,0 +1,36 @@
+@media(max-width: 950px) {
+    .example-list {
+      width: 95%;
+    }
+}
+
+@media(max-width: 1300px) {
+    .mat-column-item{
+      width: 30% !important;
+      padding-right: 3%;
+    }
+  
+    .mat-column-price{
+      width: 12% !important;
+      text-align: center;
+    }
+  
+    .mat-column-points{
+      width: 12% !important;
+      text-align: center;
+    }
+  
+  
+    .mat-column-action1{
+      width: 2% !important;
+      text-align: center;
+    }
+    .mat-column-action2{
+      width: 2% !important;
+      text-align: center;
+    }
+    .mat-column-action3{
+      width: 2% !important;
+      text-align: center;
+    }
+}

@@ -13,7 +13,7 @@ import { SnackbarComponent } from '../snackbar/snackbar.component';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss', './responsive.scss']
 })
 export class MainComponent implements OnInit {
 
@@ -85,17 +85,17 @@ export class MainComponent implements OnInit {
     if (!this.isMobileLayout) {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "33%"
-      dialogConfig.width = "60%"
-      dialogConfig.minWidth = "60%"
-      dialogConfig.minHeight = "33%"
+      //dialogConfig.height = "33%"
+      dialogConfig.width = "40%"
+      dialogConfig.minWidth = "40%"
+      //dialogConfig.minHeight = "33%"
     } else {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "45%"
+      //dialogConfig.height = "45%"
       dialogConfig.width = "95%"
       dialogConfig.minWidth = "95%"
-      dialogConfig.minHeight = "45%"
+      //dialogConfig.minHeight = "45%"
     }
 
 
@@ -118,17 +118,17 @@ export class MainComponent implements OnInit {
     if (!this.isMobileLayout) {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "33%"
-      dialogConfig.width = "60%"
-      dialogConfig.minWidth = "60%"
-      dialogConfig.minHeight = "33%"
+      //dialogConfig.height = "33%"
+      dialogConfig.width = "40%"
+      dialogConfig.minWidth = "40%"
+      //dialogConfig.minHeight = "33%"
     } else {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "45%"
+      //dialogConfig.height = "45%"
       dialogConfig.width = "95%"
       dialogConfig.minWidth = "95%"
-      dialogConfig.minHeight = "45%"
+      //dialogConfig.minHeight = "45%"
     }
 
     dialogConfig.data = {
@@ -169,17 +169,17 @@ export class MainComponent implements OnInit {
     if (!this.isMobileLayout) {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "20%"
+      //dialogConfig.height = "20%"
       dialogConfig.width = "30%"
       dialogConfig.minWidth = "30%"
-      dialogConfig.minHeight = "20%"
+      //dialogConfig.minHeight = "20%"
     } else {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "30%"
+      //dialogConfig.height = "30%"
       dialogConfig.width = "95%"
       dialogConfig.minWidth = "95%"
-      dialogConfig.minHeight = "30%"
+      //dialogConfig.minHeight = "30%"
     }
 
     dialogConfig.data = {
@@ -206,17 +206,17 @@ export class MainComponent implements OnInit {
     if (!this.isMobileLayout) {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "20%"
+      //dialogConfig.height = "20%"
       dialogConfig.width = "30%"
       dialogConfig.minWidth = "30%"
-      dialogConfig.minHeight = "20%"
+      //dialogConfig.minHeight = "20%"
     } else {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.height = "30%"
+      //dialogConfig.height = "30%"
       dialogConfig.width = "95%"
       dialogConfig.minWidth = "95%"
-      dialogConfig.minHeight = "30%"
+      //dialogConfig.minHeight = "30%"
     }
 
     dialogConfig.data = {

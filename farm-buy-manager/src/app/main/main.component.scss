@@ -1,5 +1,5 @@
 .example-list {
-    width: 50%;
+    width: 40%;
     max-width: 100%;
     border: solid 1px #ccc;
     min-height: 60px;
@@ -9,11 +9,7 @@
     overflow: hidden;
   }
 
-@media(max-width: 950px) {
-  .example-list {
-    width: 95%;
-  }
-}
+
 
 
 .example-box {
@@ -54,36 +50,7 @@ border: none;
 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-@media(max-width: 1300px) {
-  .mat-column-item{
-    width: 30% !important;
-    padding-right: 3%;
-  }
 
-  .mat-column-price{
-    width: 12% !important;
-    text-align: center;
-  }
-
-  .mat-column-points{
-    width: 12% !important;
-    text-align: center;
-  }
-
-
-  .mat-column-action1{
-    width: 2% !important;
-    text-align: center;
-  }
-  .mat-column-action2{
-    width: 2% !important;
-    text-align: center;
-  }
-  .mat-column-action3{
-    width: 2% !important;
-    text-align: center;
-  }
-}
 
 
 .drag-and-drop{
