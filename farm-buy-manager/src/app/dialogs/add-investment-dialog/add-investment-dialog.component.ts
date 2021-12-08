@@ -25,7 +25,7 @@ export class AddInvestmentDialogComponent implements OnInit {
   item = new FormControl('', [Validators.required]);
   price = new FormControl('', [Validators.required]);
   form: FormGroup;
-  invalidChars = ["-", "+", "e"];
+  invalidChars = ["-", "+"];
 
   ngOnInit(): void {
     if (this.data != null) {
@@ -39,7 +39,7 @@ export class AddInvestmentDialogComponent implements OnInit {
   }
 
   add() {
-    if (this.item.value != "" && this.price.value != "") {
+    if (this.item.value != "" && this.price.value != "" && this.price.value != null) {
       if (this.data != null) {
       this.data.investment.price = this.price.value;
       this.data.investment.item = this.item.value;
@@ -58,7 +58,7 @@ export class AddInvestmentDialogComponent implements OnInit {
         this.dialogRef.close(investment)
       }
     } else {
-      this.snackbar.openSnackBar("Nicht alle Felder wurden ausgefüllt.", "red-snackbar");
+      this.snackbar.openSnackBar("Nicht alle Felder wurden korrekt ausgefüllt.", "red-snackbar");
     }
   }
 

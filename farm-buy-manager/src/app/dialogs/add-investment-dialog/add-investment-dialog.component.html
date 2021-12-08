@@ -8,13 +8,13 @@
             </mat-form-field>
 
             <mat-form-field appearance ="outline">
-                <input (keydown) ="charcheck($event)" matInput placeholder="Preis" type = "number" [formControl] = "price">
+                <input min = "0" (keydown) ="charcheck($event)" matInput placeholder="Preis" type = "number" [formControl] = "price">
             </mat-form-field>
         </div>
     </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button mat-raised-button color = "accent" (click) = "add()">Speichern</button>
+    <button mat-button mat-raised-button color = "accent" (click) = "add()">Löschen</button>
     <button mat-button mat-raised-button color = "primary" (click) = "close()">Abbrechen</button>
 </mat-dialog-actions>
