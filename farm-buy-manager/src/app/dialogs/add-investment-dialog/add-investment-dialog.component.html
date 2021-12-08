@@ -8,7 +8,7 @@
             </mat-form-field>
 
             <mat-form-field appearance ="outline">
-                <input matInput placeholder="Preis" type = "number" [formControl] = "price">
+                <input (keydown) ="charcheck($event)" matInput placeholder="Preis" type = "number" [formControl] = "price">
             </mat-form-field>
         </div>
     </form>

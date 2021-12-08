@@ -123,7 +123,7 @@
                         hinzufügen</button>
                 </div>
                 <div
-                    style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 10%; flex-direction: column;">
+                    style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 3%; flex-direction: column;">
                     <h2>Gemachte Investitionen</h2>
                     <mat-spinner *ngIf="loading"></mat-spinner>
                     <table *ngIf="!loading && !isMobileLayout" style="width: 60%;" mat-table
@@ -193,11 +193,12 @@
         </mat-tab>
         <mat-tab label="Ranking" style="height: 100%">
             <div class = "drag-and-drop">
-                <div *ngIf="!newrankingloading" class = "ranking-column">
+              <div *ngIf="!newrankingloading" class = "drag-and-drop">
+                <div class = "ranking-column">
                     <h2>Dein Ranking</h2>
-                    <div *ngIf="!newrankingloading" cdkDropList class="example-list"
+                    <div  cdkDropList #rankingNot0List = "cdkDropList" [cdkDropListData]="rankingsNot0" [cdkDropListConnectedTo]="[ranking0List]"  class="example-list"
                         (cdkDropListDropped)="drop($event)">
-                        <div class="example-box" *ngFor="let item of rankings" cdkDrag>
+                        <div class="example-box" *ngFor="let item of rankingsNot0" cdkDrag>
                             <div style = "width: 70%;">
                                 {{item.itemname}}
                             </div>
@@ -206,9 +207,25 @@
                             </div>
                         </div>
                     </div>
-                    <button *ngIf="!newrankingloading" style="margin-top: 2%;" mat-button color="primary" (click)="saveRanking()">Ranking
-                        Speichern</button>
+
                 </div>
+                <div style = "margin-top: 3%;" class = "ranking-column">
+                  <h2>Nicht inkludiert im Ranking</h2>
+                  <div  cdkDropList #ranking0List = "cdkDropList" [cdkDropListData]="rankings0" [cdkDropListConnectedTo]="[rankingNot0List]" class="example-list"
+                      (cdkDropListDropped)="drop($event)">
+                      <div class="example-box" *ngFor="let item of rankings0" cdkDrag>
+                          <div style = "width: 70%;">
+                              {{item.itemname}}
+                          </div>
+                          <div>
+                              <b>Keine Punkte</b>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <button *ngIf="!newrankingloading" style="margin-top: 2%;" mat-button color="primary" (click)="saveRanking()">Ranking
+                Speichern</button>
+              </div>
                 <mat-spinner style="margin-top: 15%;" *ngIf="newrankingloading"></mat-spinner>
             </div>
         </mat-tab>
